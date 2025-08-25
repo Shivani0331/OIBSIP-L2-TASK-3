@@ -1,0 +1,171 @@
+:root{
+  --glass: rgba(255,255,255,0.08);
+  --text: #f7f9fb;
+  --muted: #b8c6d1;
+  --accent: #ffd54f;
+  --accent-strong: #ffb300;
+  --success: #66bb6a;
+  --danger: #ef5350;
+  --border: rgba(255,255,255,0.16);
+}
+
+/* Page background (animated gradient + floating blobs) */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  background-size: 200% 200%;
+  animation: bgShift 18s ease-in-out infinite;
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow-x:hidden;
+}
+@keyframes bgShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.bg-blobs::before,
+.bg-blobs::after{
+  content:"";
+  position:fixed;
+  width:60vmax; height:60vmax;
+  top:-10vmax; left:-10vmax;
+  background: radial-gradient(circle at 30% 30%, #ff6ec7 0%, transparent 60%),
+              radial-gradient(circle at 70% 70%, #00d2ff 0%, transparent 55%);
+  filter: blur(60px) saturate(140%);
+  opacity:.18;
+  animation: floatBlobs 28s ease-in-out infinite alternate;
+  pointer-events:none;
+  z-index:-1;
+}
+.bg-blobs::after{
+  top:auto; bottom:-15vmax; left:auto; right:-15vmax;
+  transform: rotate(25deg);
+  animation-duration: 32s;
+}
+@keyframes floatBlobs{
+  from{transform: translate3d(0,0,0) rotate(0deg)}
+  to{transform: translate3d(5vmax,-3vmax,0) rotate(20deg)}
+}
+
+/* Card */
+.container{
+  width:min(780px,94vw);
+  padding:22px 20px 24px;
+  border-radius:18px;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+/* Header */
+.header{text-align:center;margin-bottom:8px}
+.header h1{margin:6px 0 0;font-size:2rem;letter-spacing:.4px}
+.sub{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+
+/* Progress */
+.progress-wrap{margin:14px 0 18px}
+.progress{
+  position:relative;
+  height:16px;
+  background: rgba(255,255,255,0.14);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg,#66bb6a,#29b6f6,#ab47bc,#ff7043);
+  background-size: 200% 100%;
+  animation: rainbow 6s linear infinite;
+  transition: width .25s ease;
+}
+@keyframes rainbow{
+  from{background-position:0% 50%}
+  to{background-position:200% 50%}
+}
+.progress-text{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.86rem; color:#e9f2f9; text-shadow:0 1px 2px #0008;
+  pointer-events:none;
+}
+
+/* Add row */
+.addTask{
+  display:grid; grid-template-columns:1fr auto; gap:10px;
+}
+.addTask input{
+  padding:12px 14px; border-radius:12px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color:var(--text); outline:none;
+}
+.addTask input::placeholder{color:#d9e1e69c}
+.addTask button{
+  padding:12px 16px; border:none; border-radius:12px;
+  background: var(--accent); color:#0d1b24; font-weight:800;
+  cursor:pointer;
+}
+.addTask button:hover{background:var(--accent-strong)}
+
+/* Lists */
+h3{margin:18px 0 10px;font-size:1.05rem;color:#eef6ff}
+.task-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+
+.task{
+  display:grid; grid-template-columns:1fr auto; gap:10px;
+  align-items:center;
+  padding:10px 12px; border-radius:12px;
+  background: rgba(255,255,255,0.08);
+  border:1px solid var(--border);
+}
+.task.completed .text{ text-decoration: line-through; opacity:.7 }
+
+.content{display:flex; align-items:center; gap:10px}
+.text{word-break:break-word}
+
+/* Inline edit */
+.edit-row{display:none; gap:8px}
+.task.editing .text{display:none}
+.task.editing .edit-row{display:flex}
+.edit-input{
+  flex:1 1 auto; padding:8px 10px; border-radius:10px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.06); color:var(--text);
+}
+
+/* Buttons */
+.btns{display:flex; gap:8px}
+.btn{
+  padding:8px 11px; border:none; border-radius:10px;
+  font-weight:800; cursor:pointer; color:#0d1b24;
+}
+.btn.done{background:#81c784}
+.btn.undo{background:#29b6f6}
+.btn.edit{background:#90caf9}
+.btn.save{background:#7ed957}
+.btn.cancel{background:#ffe082}
+.btn.del{background:var(--danger); color:#fff}
+.btn:hover{filter:brightness(1.06); transform: translateY(-1px)}
+
+/* Bulk actions */
+.bulk-actions{
+  margin-top:18px; display:flex; gap:10px; justify-content:flex-end;
+}
+.bulk-actions button{
+  padding:10px 12px; border:none; border-radius:10px;
+  font-weight:800; cursor:pointer; color:var(--text);
+  background: rgba(255,255,255,0.14);
+  border:1px solid var(--border);
+}
+.bulk-actions button:hover{background: rgba(255,255,255,0.22)}
+
+
+
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do Pro</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="bg-blobs"></div>
+  <div class="container">
+    <header class="header">
+      <h1>To-Do Pro</h1>
+      <p class="sub">Add • Edit • Delete • Persist • Celebrate 🎉</p>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+        <span id="progressText" class="progress-text">0% (0/0)</span>
+      </div>
+    </div>
+
+    <!-- Add row -->
+    <div class="addTask">
+      <input id="taskInput" type="text" placeholder="Add a new task and press Enter…" />
+      <button id="addBtn">Add Task</button>
+    </div>
+
+    <!-- Lists -->
+    <section>
+      <h3>📌 Pending</h3>
+      <ul id="pendingList" class="task-list"></ul>
+    </section>
+
+    <section>
+      <h3>✅ Completed</h3>
+      <ul id="completedList" class="task-list"></ul>
+    </section>
+
+    <!-- Bulk actions -->
+    <div class="bulk-actions">
+      <button id="clearCompleted">Clear Completed</button>
+      <button id="clearAll">Clear All</button>
+    </div>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
